@@ -9,6 +9,7 @@ import pandas as pd
 from src.cli import prompt_series_ids, prompt_date_range
 from src.fred_client import fetch_series
 from src.regression import run_ols
+from src.plotting import plot_actual_vs_fitted  # NEW import
 
 
 def fetch_X_dataframe(
@@ -26,14 +27,12 @@ def fetch_X_dataframe(
     series_dict: Dict[str, pd.Series] = {}
 
     for series_id in x_ids:
-        # Let fetch_series raise ValueError for invalid IDs or request issues.
         s = fetch_series(series_id, start=start, end=end)
         series_dict[series_id] = s
 
     if not series_dict:
         raise ValueError("No independent series to fetch.")
 
-    # Align via index when concatenating; columns are series IDs
     X = pd.concat(series_dict.values(), axis=1, keys=series_dict.keys())
     return X
 
@@ -61,16 +60,28 @@ def main() -> None:
     try:
         result = run_ols(y, X)
     except ValueError as e:
-        # e.g., no overlapping observations between series
         print(f"Error running regression: {e}")
         return
 
-    # 5. Print R²
     r2 = result["r_squared"]
+    model = result["model"]
+
     print()
     print("===================================================")
     print(f"R² for {y_id} ~ {', '.join(x_ids)}: {r2:.4f}")
     print("===================================================")
+
+    # 5. Optionally show plot of actual vs fitted
+    answer = input("Show plot of actual vs fitted values? (y/n): ").strip().lower()
+    if answer.startswith("y"):
+        # model.fittedvalues has index equal to the aligned y used in regression
+        fitted = model.fittedvalues
+
+        # Align original y to the fitted index (just to be safe)
+        y_aligned = y.loc[fitted.index]
+
+        title = f"Actual vs Fitted: {y_id} ~ {', '.join(x_ids)}"
+        plot_actual_vs_fitted(y_aligned, fitted, title=title)
 
 
 if __name__ == "__main__":
