@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from typing import Optional
-
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -12,15 +11,15 @@ def plot_actual_vs_fitted(
     y: pd.Series,
     fitted: pd.Series,
     title: str = "Actual vs Fitted",
-    y_label: Optional[str] = None,
-) -> None:
+    return_fig: bool = False,
+):
     """
     Plot actual vs fitted values over time using matplotlib.
 
-    Assumes that indices of y and fitted are already aligned.
+    Assumes the indices of y and fitted are already aligned.
+    If return_fig=True, returns the figure object for use in Streamlit.
+    Otherwise, calls plt.show().
     """
-    if y_label is None:
-        y_label = y.name or "Value"
 
     fig, ax = plt.subplots()
 
@@ -28,10 +27,13 @@ def plot_actual_vs_fitted(
     ax.plot(fitted.index, fitted.values, label="Fitted", linestyle="--")
 
     ax.set_xlabel("Time")
-    ax.set_ylabel(y_label)
+    ax.set_ylabel(y.name or "Value")
     ax.set_title(title)
     ax.legend()
-
-    fig.autofmt_xdate()  # nicer date labels
+    fig.autofmt_xdate()
     plt.tight_layout()
+
+    if return_fig:
+        return fig
+
     plt.show()
