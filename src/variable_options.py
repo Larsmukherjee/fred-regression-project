@@ -1,8 +1,24 @@
-VARIABLE_OPTIONS = {
-    "Unemployment Rate (UNRATE)": "UNRATE",
-    "Real GDP (GDPC1)": "GDPC1",
-    "Consumer Price Index (CPIAUCSL)": "CPIAUCSL",
-    "Core CPI (CPILFESL)": "CPILFESL",
-    "PCE Price Index (PCEPI)": "PCEPI",
-    "Federal Funds Rate (FEDFUNDS)": "FEDFUNDS",
+# src/variable_options.py
+
+VARIABLES = {
+    "Unemployment rate (UNRATE)": {
+        "id": "UNRATE",
+        "description": "Civilian unemployment rate",
+        "freq": "monthly",
+    },
+    "Price level: CPI (CPIAUCSL)": {
+        "id": "CPIAUCSL",
+        "description": "Consumer Price Index for All Urban Consumers",
+        "freq": "monthly",
+    },
+    "Money supply: M2 (M2SL)": {
+        "id": "M2SL",
+        "description": "M2 money stock",
+        "freq": "monthly",
+    },
+    "Real GDP (GDPC1)": {
+        "id": "GDPC1",
+        "description": "Real Gross Domestic Product",
+        "freq": "quarterly",
+    },
 }

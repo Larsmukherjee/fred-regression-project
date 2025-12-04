@@ -1,37 +1,23 @@
 # src/plotting.py
 
-from __future__ import annotations
-
-from typing import Optional
-import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
-
-def plot_actual_vs_fitted(
-    y: pd.Series,
-    fitted: pd.Series,
-    title: str = "Actual vs Fitted",
-    return_fig: bool = False,
-):
-    """
-    Plot actual vs fitted values over time using matplotlib.
-
-    Assumes the indices of y and fitted are already aligned.
-    If return_fig=True, returns the figure object for use in Streamlit.
-    Otherwise, calls plt.show().
-    """
-
+def plot_scatter_with_fit(y: pd.Series, x: pd.Series, fitted: pd.Series, title="Scatter Plot with Regression Line", return_fig=False):
     fig, ax = plt.subplots()
 
-    ax.plot(y.index, y.values, label="Actual")
-    ax.plot(fitted.index, fitted.values, label="Fitted", linestyle="--")
+    # Scatter plot of data points
+    ax.scatter(x, y, alpha=0.6, label="Data Points")
 
-    ax.set_xlabel("Time")
-    ax.set_ylabel(y.name or "Value")
+    # Regression line
+    sorted_idx = np.argsort(x)
+    ax.plot(x.iloc[sorted_idx], fitted.iloc[sorted_idx], color="red", label="Regression Line")
+
+    ax.set_xlabel(x.name or "X")
+    ax.set_ylabel(y.name or "Y")
     ax.set_title(title)
     ax.legend()
-    fig.autofmt_xdate()
-    plt.tight_layout()
 
     if return_fig:
         return fig
