@@ -2,7 +2,7 @@
 
 This repository contains Python code for fetching economic time-series data from the Federal Reserve Economic Data (FRED) API and preparing it for later regression analysis. The project currently includes a functional FRED client, a simple project structure for expansion, and a pytest-based testing suite.
 
-Project Purpose
+##Project Purpose
 
 The goal of this project is to build a reproducible workflow that:
 
@@ -16,7 +16,7 @@ Serves as a foundation for future regression tools and analysis modules.
 
 This project will grow to include automated regressions, transformations, and integrated data checks.
 
-Directory Structure
+##Directory Structure
 fred-regression-project/
 ├── src/
 │   ├── fred_client.py        # Fetches FRED series through the API
@@ -30,28 +30,23 @@ fred-regression-project/
 ├── .gitattributes            # Git settings for text handling
 └── README.md                 # Project documentation
 
-Installation
+##Installation
 Clone the repository
 git clone https://github.com/Larsmukherjee/fred-regression-project.git
 cd fred-regression-project
 
-Create and activate a virtual environment
+##Create and activate a virtual environment
 python3 -m venv .venv
 source .venv/bin/activate          # macOS/Linux
 .venv\Scripts\activate             # Windows
 
-Install dependencies
+##Install dependencies
 
 If the project uses a requirements file:
 
 pip install -r requirements.txt
 
-
-If the project uses Poetry:
-
-poetry install
-
-FRED API Key
+##FRED API Key
 
 You will need a FRED API key, available for free at:
 
@@ -64,7 +59,7 @@ FRED_API_KEY=your_api_key_here
 
 The client automatically reads this environment variable when fetching data.
 
-Basic Usage Example
+##Basic Usage Example
 from src.fred_client import fetch_series
 
 # Fetch the unemployment rate starting in 2000
@@ -75,7 +70,7 @@ print(series.head())
 
 The returned object is a pandas Series indexed by observation date.
 
-Running Tests
+##Running Tests
 
 Tests are written using pytest. Run them with:
 
@@ -84,7 +79,7 @@ pytest
 
 Pytest cache directories and artifacts are ignored via .gitignore.
 
-Future Development
+##Future Development
 
 Planned additions include:
 
@@ -98,7 +93,7 @@ Optional CLI tools for fetching and analyzing data from the terminal.
 
 Local caching so large API calls do not need to be repeated.
 
-Contributing
+##Contributing
 
 Before contributing changes, please ensure:
 
